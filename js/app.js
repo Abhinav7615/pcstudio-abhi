@@ -1,22 +1,13 @@
-// API Configuration - Supports both localhost and custom domain
+// API Configuration - Supports both localhost and deployed environments
 let API_URL;
 
 // Detect environment and set API URL
 if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
     // Development environment
     API_URL = 'http://localhost:5000/api';
-} else if (window.location.hostname === 'pcstudioabhi.com' || window.location.hostname.includes('pcstudioabhi')) {
-    // Custom domain (local or production)
-    if (window.location.protocol === 'https:') {
-        // Production (HTTPS)
-        API_URL = 'https://api.pcstudioabhi.com/api';
-    } else {
-        // Local custom domain (HTTP)
-        API_URL = 'http://api.pcstudioabhi.com:5000/api';
-    }
 } else {
-    // Fallback to localhost
-    API_URL = 'http://localhost:5000/api';
+    // Production - Use Render backend
+    API_URL = 'https://pcstudio-abhi.onrender.com/api';
 }
 
 // Sample Products Data
