@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Second Hand PC Studio</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1><i class="fas fa-laptop"></i> Second Hand PC Studio</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../index.html#products" class="nav-link">Products</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Contact Section -->
+    <section style="padding: 3rem 0; margin-top: 60px;">
+        <div class="container">
+            <h1 style="text-align: center; margin-bottom: 3rem; color: var(--primary-color); font-size: 2.5rem;">Get in Touch</h1>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 3rem;">
+                <!-- Contact Form -->
+                <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: var(--shadow);">
+                    <h2 style="color: var(--primary-color); margin-bottom: 1.5rem;">Send us a Message</h2>
+                    <form id="contactForm" onsubmit="handleContactForm(event)">
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Name *</label>
+                            <input type="text" required class="form-input" style="width: 100%;">
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Email *</label>
+                            <input type="email" required class="form-input" style="width: 100%;">
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Phone *</label>
+                            <input type="tel" required class="form-input" style="width: 100%;">
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Subject *</label>
+                            <input type="text" required class="form-input" style="width: 100%;">
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Message *</label>
+                            <textarea required class="form-input" style="width: 100%; height: 120px; resize: vertical; padding: 0.75rem;"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+                    </form>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <div style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); color: white; padding: 2rem; border-radius: 8px; margin-bottom: 2rem; box-shadow: var(--shadow);">
+                        <h2 style="margin-bottom: 2rem; color: var(--secondary-color);">Contact Information</h2>
+
+                        <div style="margin-bottom: 2rem;">
+                            <h3 style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                <i class="fas fa-phone" style="color: var(--secondary-color); font-size: 1.5rem;"></i>
+                                Phone
+                            </h3>
+                            <p style="margin-left: 2.5rem;">
+                                <strong>+91 6388391842</strong><br>
+                                <small>Available: 10 AM - 8 PM (IST)</small>
+                            </p>
+                        </div>
+
+                        <div style="margin-bottom: 2rem;">
+                            <h3 style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                <i class="fab fa-whatsapp" style="color: var(--secondary-color); font-size: 1.5rem;"></i>
+                                WhatsApp
+                            </h3>
+                            <p style="margin-left: 2.5rem;">
+                                <a href="https://wa.me/916388391842" target="_blank" style="color: white; text-decoration: underline;">Chat with us on WhatsApp</a><br>
+                                <small>Fastest response time</small>
+                            </p>
+                        </div>
+
+                        <div style="margin-bottom: 2rem;">
+                            <h3 style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                <i class="fas fa-envelope" style="color: var(--secondary-color); font-size: 1.5rem;"></i>
+                                Email
+                            </h3>
+                            <p style="margin-left: 2.5rem;">
+                                <a href="mailto:info@secondhandpc.com" style="color: white; text-decoration: none;">info@secondhandpc.com</a><br>
+                                <small>Response within 24 hours</small>
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                <i class="fas fa-clock" style="color: var(--secondary-color); font-size: 1.5rem;"></i>
+                                Business Hours
+                            </h3>
+                            <p style="margin-left: 2.5rem;">
+                                Monday - Sunday<br>
+                                10:00 AM - 8:00 PM (IST)<br>
+                                Holidays: Available by appointment
+                            </p>
+                        </div>
+                    </div>
+
+                    <div style="background: #cce5ff; color: #004085; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #2980b9;">
+                        <h3 style="margin-bottom: 1rem;">
+                            <i class="fas fa-info-circle"></i> Need Quick Help?
+                        </h3>
+                        <p>For faster response, reach out via WhatsApp. We typically respond within minutes!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: var(--shadow);">
+                <h2 style="color: var(--primary-color); margin-bottom: 2rem;">Frequently Asked Questions</h2>
+
+                <div style="display: grid; gap: 1rem;">
+                    <div style="border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
+                        <h3 style="color: var(--secondary-color); cursor: pointer;" onclick="toggleFaq(this)">
+                            <i class="fas fa-chevron-down"></i> How long does delivery take?
+                        </h3>
+                        <p style="display: none; margin-top: 0.5rem; color: var(--text-light);">
+                            We typically deliver within 2-3 business days across India. Some remote areas may take 4-5 days.
+                        </p>
+                    </div>
+
+                    <div style="border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
+                        <h3 style="color: var(--secondary-color); cursor: pointer;" onclick="toggleFaq(this)">
+                            <i class="fas fa-chevron-down"></i> Do you accept cash on delivery?
+                        </h3>
+                        <p style="display: none; margin-top: 0.5rem; color: var(--text-light);">
+                            Yes! We accept Cash on Delivery, UPI, and Card payments. Choose your preferred option at checkout.
+                        </p>
+                    </div>
+
+                    <div style="border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
+                        <h3 style="color: var(--secondary-color); cursor: pointer;" onclick="toggleFaq(this)">
+                            <i class="fas fa-chevron-down"></i> What is your warranty period?
+                        </h3>
+                        <p style="display: none; margin-top: 0.5rem; color: var(--text-light);">
+                            We offer 6-12 months warranty depending on the product condition. Check individual product pages for details.
+                        </p>
+                    </div>
+
+                    <div style="border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
+                        <h3 style="color: var(--secondary-color); cursor: pointer;" onclick="toggleFaq(this)">
+                            <i class="fas fa-chevron-down"></i> Can I return the laptop?
+                        </h3>
+                        <p style="display: none; margin-top: 0.5rem; color: var(--text-light);">
+                            Yes! We offer a 15-day easy return policy. Read our complete return policy for more details.
+                        </p>
+                    </div>
+
+                    <div style="border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
+                        <h3 style="color: var(--secondary-color); cursor: pointer;" onclick="toggleFaq(this)">
+                            <i class="fas fa-chevron-down"></i> Are the laptops genuine?
+                        </h3>
+                        <p style="display: none; margin-top: 0.5rem; color: var(--text-light);">
+                            100% genuine and refurbished. Every laptop is tested and verified before shipping. We guarantee quality!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="return-policy.html">Return Policy</a></li>
+                        <li><a href="warranty.html">Warranty</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Second Hand PC Studio. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function handleContactForm(event) {
+            event.preventDefault();
+            alert('Thank you for your message! We will get back to you within 24 hours.');
+            document.getElementById('contactForm').reset();
+        }
+
+        function toggleFaq(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('i');
+            
+            if (answer.style.display === 'none') {
+                answer.style.display = 'block';
+                icon.className = 'fas fa-chevron-up';
+            } else {
+                answer.style.display = 'none';
+                icon.className = 'fas fa-chevron-down';
+            }
+        }
+    </script>
+</body>
+</html>

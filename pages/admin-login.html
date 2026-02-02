@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Second Hand PC Studio</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container" style="max-width:420px; margin:4rem auto;">
+        <div class="card" style="padding:2rem;">
+            <h2 style="text-align:center;">Admin Login</h2>
+            <form id="adminLoginPageForm">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input id="adminUsernameInput" type="text" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input id="adminPasswordInput" type="password" class="form-input" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+                <p style="text-align:center; margin-top:1rem;">
+                    <a href="#" onclick="showForgotPasswordModal(event)" style="color: #3498db; font-size: 0.9rem;">Forgot Password?</a>
+                </p>
+                <p style="text-align:center;">
+                    <a href="../index.html">Back to site</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+        <div style="background: white; max-width: 400px; margin: 5rem auto; padding: 2rem; border-radius: 8px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h3 style="margin: 0;">Reset Password</h3>
+                <button type="button" onclick="closeForgotPasswordModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            </div>
+            
+            <!-- Step 1: Enter Email -->
+            <div id="step1EmailDiv">
+                <div class="form-group">
+                    <label>Admin Email</label>
+                    <input id="resetEmailInput" type="email" class="form-input" placeholder="yadavabhinav551@gmail.com" required>
+                </div>
+                <button type="button" class="btn btn-primary btn-block" onclick="requestPasswordReset()">Send Reset Code</button>
+            </div>
+
+            <!-- Step 2: Enter Reset Code & New Password -->
+            <div id="step2ResetDiv" style="display: none;">
+                <div class="form-group">
+                    <label>Reset Code (Check your terminal/console)</label>
+                    <input id="resetCodeInput" type="text" class="form-input" placeholder="Enter 6-digit code" required>
+                </div>
+                <div class="form-group">
+                    <label>New Password</label>
+                    <input id="newPasswordInput" type="password" class="form-input" placeholder="Enter new password" required>
+                </div>
+                <button type="button" class="btn btn-primary btn-block" onclick="resetPasswordSubmit()">Reset Password</button>
+                <button type="button" class="btn btn-secondary btn-block" style="margin-top: 0.5rem;" onclick="resetStep1()">Back</button>
+            </div>
+
+            <div id="resetStatusDiv" style="margin-top: 1rem; padding: 0.5rem; border-radius: 5px; display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:5000/api';
+
+        // Login Form
+        document.getElementById('adminLoginPageForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const username = document.getElementById('adminUsernameInput').value.trim();
+            const password = document.getElementById('adminPasswordInput').value.trim();
+            if (!username || !password) {
+                alert('Please enter username and password');
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_URL}/admin/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    localStorage.setItem('adminToken', data.token);
+                    localStorage.setItem('admin', JSON.stringify(data.admin));
+                    sessionStorage.setItem('adminLoggedIn', 'true');
+                    sessionStorage.setItem('adminUsername', data.admin.username || username);
+                    alert('Login successful — redirecting to dashboard');
+                    window.location.href = 'admin.html';
+                } else {
+                    alert('Login failed: ' + (data.message || 'Invalid credentials'));
+                }
+            } catch (err) {
+                alert('Login error: ' + err.message);
+            }
+        });
+
+        // Forgot Password Functions
+        function showForgotPasswordModal(e) {
+            e.preventDefault();
+            document.getElementById('forgotPasswordModal').style.display = 'block';
+            document.getElementById('step1EmailDiv').style.display = 'block';
+            document.getElementById('step2ResetDiv').style.display = 'none';
+            document.getElementById('resetStatusDiv').style.display = 'none';
+        }
+
+        function closeForgotPasswordModal() {
+            document.getElementById('forgotPasswordModal').style.display = 'none';
+            resetStep1();
+        }
+
+        function resetStep1() {
+            document.getElementById('resetEmailInput').value = '';
+            document.getElementById('resetCodeInput').value = '';
+            document.getElementById('newPasswordInput').value = '';
+            document.getElementById('step1EmailDiv').style.display = 'block';
+            document.getElementById('step2ResetDiv').style.display = 'none';
+            document.getElementById('resetStatusDiv').style.display = 'none';
+        }
+
+        async function requestPasswordReset() {
+            const email = document.getElementById('resetEmailInput').value.trim();
+            const statusDiv = document.getElementById('resetStatusDiv');
+
+            if (!email) {
+                statusDiv.style.display = 'block';
+                statusDiv.style.background = '#ffebee';
+                statusDiv.style.color = '#c62828';
+                statusDiv.innerHTML = 'Please enter your email';
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_URL}/admin/forgot-password`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    statusDiv.style.display = 'block';
+                    statusDiv.style.background = '#e8f5e9';
+                    statusDiv.style.color = '#2e7d32';
+                    statusDiv.innerHTML = `✅ ${data.message}<br><small>Code: <strong>${data.resetCode}</strong></small>`;
+                    
+                    // Show step 2
+                    setTimeout(() => {
+                        document.getElementById('step1EmailDiv').style.display = 'none';
+                        document.getElementById('step2ResetDiv').style.display = 'block';
+                    }, 1500);
+                } else {
+                    statusDiv.style.display = 'block';
+                    statusDiv.style.background = '#ffebee';
+                    statusDiv.style.color = '#c62828';
+                    statusDiv.innerHTML = '❌ ' + (data.message || 'Error occurred');
+                }
+            } catch (err) {
+                statusDiv.style.display = 'block';
+                statusDiv.style.background = '#ffebee';
+                statusDiv.style.color = '#c62828';
+                statusDiv.innerHTML = '❌ Error: ' + err.message;
+            }
+        }
+
+        async function resetPasswordSubmit() {
+            const email = document.getElementById('resetEmailInput').value.trim();
+            const resetCode = document.getElementById('resetCodeInput').value.trim();
+            const newPassword = document.getElementById('newPasswordInput').value.trim();
+            const statusDiv = document.getElementById('resetStatusDiv');
+
+            if (!email || !resetCode || !newPassword) {
+                statusDiv.style.display = 'block';
+                statusDiv.style.background = '#ffebee';
+                statusDiv.style.color = '#c62828';
+                statusDiv.innerHTML = 'Please fill all fields';
+                return;
+            }
+
+            if (newPassword.length < 6) {
+                statusDiv.style.display = 'block';
+                statusDiv.style.background = '#ffebee';
+                statusDiv.style.color = '#c62828';
+                statusDiv.innerHTML = 'Password must be at least 6 characters';
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_URL}/admin/reset-password`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, resetCode, newPassword })
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    statusDiv.style.display = 'block';
+                    statusDiv.style.background = '#e8f5e9';
+                    statusDiv.style.color = '#2e7d32';
+                    statusDiv.innerHTML = '✅ ' + data.message;
+                    
+                    setTimeout(() => {
+                        closeForgotPasswordModal();
+                        alert('Password reset successful! Please login with your new password.');
+                        document.getElementById('adminPasswordInput').value = '';
+                    }, 1500);
+                } else {
+                    statusDiv.style.display = 'block';
+                    statusDiv.style.background = '#ffebee';
+                    statusDiv.style.color = '#c62828';
+                    statusDiv.innerHTML = '❌ ' + (data.message || 'Error occurred');
+                }
+            } catch (err) {
+                statusDiv.style.display = 'block';
+                statusDiv.style.background = '#ffebee';
+                statusDiv.style.color = '#c62828';
+                statusDiv.innerHTML = '❌ Error: ' + err.message;
+            }
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('forgotPasswordModal');
+            if (event.target === modal) {
+                closeForgotPasswordModal();
+            }
+        });
+    </script>
+</body>
+</html>

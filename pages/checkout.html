@@ -1,0 +1,495 @@
+zz<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Second Hand PC Studio</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1><i class="fas fa-laptop"></i> Second Hand PC Studio</h1>
+            </div>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../index.html#products" class="nav-link">Products</a></li>
+                <li><a href="#" onclick="history.back()" class="nav-link"><i class="fas fa-arrow-left"></i> Back</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Checkout Section -->
+    <section class="checkout-section">
+        <div class="container">
+            <h2>Checkout</h2>
+            <div class="checkout-grid">
+                <!-- Left Column: Shipping & Payment -->
+                <div class="checkout-form-col">
+                    <!-- Customer Info -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-user"></i> Customer Information</h3>
+                        <form id="customerInfoForm">
+                            <div class="form-group">
+                                <label>Full Name *</label>
+                                <input type="text" id="customerName" required class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label>Email *</label>
+                                <input type="email" id="customerEmail" required class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label>Phone Number *</label>
+                                <input type="tel" id="customerPhone" required class="form-input">
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Shipping Address -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-map-marker-alt"></i> Shipping Address</h3>
+                        <form id="shippingForm">
+                            <div class="form-group">
+                                <label>Street Address *</label>
+                                <input type="text" id="address" placeholder="House No., Building Name" required class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label>Area/Locality *</label>
+                                <input type="text" id="area" placeholder="Area, Street, Sector, Village" required class="form-input">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>City *</label>
+                                    <input type="text" id="city" required class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label>State *</label>
+                                    <select id="state" required class="form-input">
+                                        <option value="">Select State</option>
+                                        <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                        <option value="Assam">Assam</option>
+                                        <option value="Bihar">Bihar</option>
+                                        <option value="Chhattisgarh">Chhattisgarh</option>
+                                        <option value="Goa">Goa</option>
+                                        <option value="Gujarat">Gujarat</option>
+                                        <option value="Haryana">Haryana</option>
+                                        <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                        <option value="Jharkhand">Jharkhand</option>
+                                        <option value="Karnataka">Karnataka</option>
+                                        <option value="Kerala">Kerala</option>
+                                        <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                        <option value="Maharashtra">Maharashtra</option>
+                                        <option value="Manipur">Manipur</option>
+                                        <option value="Meghalaya">Meghalaya</option>
+                                        <option value="Mizoram">Mizoram</option>
+                                        <option value="Nagaland">Nagaland</option>
+                                        <option value="Odisha">Odisha</option>
+                                        <option value="Punjab">Punjab</option>
+                                        <option value="Rajasthan">Rajasthan</option>
+                                        <option value="Sikkim">Sikkim</option>
+                                        <option value="Tamil Nadu">Tamil Nadu</option>
+                                        <option value="Telangana">Telangana</option>
+                                        <option value="Tripura">Tripura</option>
+                                        <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                        <option value="Uttarakhand">Uttarakhand</option>
+                                        <option value="West Bengal">West Bengal</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>PIN Code *</label>
+                                <input type="text" id="pincode" pattern="[0-9]{6}" required class="form-input">
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Payment Method -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-credit-card"></i> Payment Method</h3>
+                        <div class="payment-methods">
+                            <label class="payment-option">
+                                <input type="radio" name="paymentMethod" value="upi" required>
+                                <span class="payment-label">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    <strong>UPI Payment</strong>
+                                    <small>Fast & Secure</small>
+                                </span>
+                            </label>
+                            <label class="payment-option">
+                                    http://127.0.0.1:5500/pages/admin-login.html                                    <input type="radio" name="paymentMethod" value="bank">
+                                    <span class="payment-label">
+                                        <i class="fas fa-bank"></i>
+                                        <strong>Bank Transfer</strong>
+                                        <small>NEFT/RTGS/Cheque</small>
+                        <div id="upiSection" style="display: none;">
+                            <div style="background: #e8f4f8; padding: 1rem; border-radius: 5px; margin-bottom: 1rem; border-left: 4px solid #3498db;">
+                                <h4 style="margin-top: 0; color: #2c3e50;"><i class="fas fa-qrcode"></i> Admin UPI Details</h4>
+                                <div id="upiDetailsDisplay" style="color: #2c3e50;">
+                                    <p>Loading payment details...</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Transaction ID (after UPI payment) *</label>
+                                <input type="text" id="upiTransactionId" placeholder="Enter UPI Reference Number" class="form-input">
+                                <small style="color: #7f8c8d;">Eg: UPI123456789012345</small>
+                            </div>
+                            <div class="form-group">
+                                <label>Upload Payment Proof (Screenshot) *</label>
+                                <input type="file" id="upiProofFile" accept="image/*" class="form-input" required>
+                                <small style="color: #7f8c8d;">Upload screenshot of successful payment (JPG, PNG)</small>
+                            </div>
+                        </div>
+
+                        <!-- Bank Transfer Section -->
+                        <div id="bankSection" style="display: none;">
+                            <div style="background: #e8f4f8; padding: 1rem; border-radius: 5px; margin-bottom: 1rem; border-left: 4px solid #3498db;">
+                                <h4 style="margin-top: 0; color: #2c3e50;"><i class="fas fa-bank"></i> Admin Bank Details</h4>
+                                <div id="bankDetailsDisplay" style="color: #2c3e50;">
+                                    <p>Loading payment details...</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Transaction ID/Reference Number *</label>
+                                <input type="text" id="bankTransactionId" placeholder="Enter Bank Transfer Reference" class="form-input">
+                                <small style="color: #7f8c8d;">Eg: NEFT123456 or Cheque Number</small>
+                            </div>
+                            <div class="form-group">
+                                <label>Upload Payment Proof (Screenshot/Photo) *</label>
+                                <input type="file" id="bankProofFile" accept="image/*" class="form-input" required>
+                                <small style="color: #7f8c8d;">Upload screenshot or photo of payment confirmation (JPG, PNG)</small>
+                            </div>
+                        </div>
+
+                        <!-- Card Section - REMOVED -->
+                        <!-- Use Bank Transfer instead of credit card for manual payment -->
+
+                    </div>
+
+                    <!-- Terms & Conditions -->
+                    <div class="form-section">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="agreeTerms" required>
+                            I agree to the <a href="terms.html" target="_blank">Terms & Conditions</a> and <a href="privacy.html" target="_blank">Privacy Policy</a>
+                        </label>
+                    </div>
+
+                    <button class="btn btn-primary btn-block" style="height: 50px; font-size: 1.1rem; margin-top: 2rem;" onclick="placeOrder()">
+                        <i class="fas fa-lock"></i> Place Order
+                    </button>
+                </div>
+
+                <!-- Right Column: Order Summary -->
+                <div class="order-summary-col">
+                    <div class="order-summary">
+                        <h3>Order Summary</h3>
+                        <div id="orderItems" class="order-items">
+                            <!-- Cart items will be displayed here -->
+                        </div>
+
+                        <div class="summary-box">
+                            <div class="summary-row">
+                                <span>Subtotal:</span>
+                                <span id="summarySubtotal">₹0</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Shipping:</span>
+                                <span id="summaryShipping">Free</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Tax (18% GST):</span>
+                                <span id="summaryTax">₹0</span>
+                            </div>
+                            <div class="summary-row total">
+                                <span>Total Amount:</span>
+                                <span id="summaryTotal">₹0</span>
+                            </div>
+                        </div>
+
+                        <div class="info-box">
+                            <h4><i class="fas fa-info-circle"></i> Shipping Info</h4>
+                            <p>✓ Free shipping on all orders</p>
+                            <p>✓ Delivery in 2-3 business days</p>
+                            <p>✓ Safe & Secure packaging</p>
+                            <p>✓ Track your order in real-time</p>
+                        </div>
+
+                        <div class="info-box">
+                            <h4><i class="fas fa-shield-alt"></i> Return Policy</h4>
+                            <p>✓ 15 days easy return</p>
+                            <p>✓ Full refund if issues found</p>
+                            <p>✓ Free return shipping</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <p>Phone: +91 6388391842</p>
+                    <p>Email: info@secondhandpc.com</p>
+                    <p>Available: 10 AM - 8 PM (IST)</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="return-policy.html">Return Policy</a></li>
+                        <li><a href="warranty.html">Warranty</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Secure Checkout</h4>
+                    <p><i class="fas fa-lock"></i> 256-bit SSL Encrypted</p>
+                    <p><i class="fas fa-check-circle"></i> PCI DSS Compliant</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Second Hand PC Studio. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content" style="text-align: center; max-width: 400px;">
+            <div style="font-size: 3rem; color: #27ae60; margin-bottom: 1rem;">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3 style="color: #27ae60;">Order Placed Successfully!</h3>
+            <p id="orderNumber" style="font-size: 1.2rem; margin: 1rem 0;"></p>
+            <p>Your order has been received. You will receive a confirmation email shortly.</p>
+            <p style="color: #7f8c8d; margin-top: 1rem;">An admin will contact you to confirm delivery address and payment details.</p>
+            <button class="btn btn-primary" onclick="returnToHome()" style="width: 100%; margin-top: 2rem;">Continue Shopping</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Load Payment Details for Admin
+        function loadPaymentDetails() {
+            fetch('http://localhost:5000/api/payment-details')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success && data.paymentDetails) {
+                        // Display UPI details
+                        if (data.paymentDetails.upi) {
+                            const upi = data.paymentDetails.upi;
+                            document.getElementById('upiDetailsDisplay').innerHTML = `
+                                <p><strong>UPI ID:</strong> <span style="color: #e74c3c; font-size: 1.1em;">${upi.upiId}</span></p>
+                                <p><strong>Owner Name:</strong> ${upi.ownerName}</p>
+                            `;
+                        } else {
+                            document.getElementById('upiDetailsDisplay').innerHTML = '<p style="color: #e74c3c;">Admin has not added UPI details yet. Please use Bank Transfer.</p>';
+                        }
+
+                        // Display Bank details
+                        if (data.paymentDetails.bank) {
+                            const bank = data.paymentDetails.bank;
+                            document.getElementById('bankDetailsDisplay').innerHTML = `
+                                <p><strong>Bank Name:</strong> ${bank.bankName}</p>
+                                <p><strong>Account Holder:</strong> ${bank.accountHolder}</p>
+                                <p><strong>Account Number:</strong> XXXXXX${bank.accountNumber}</p>
+                                <p><strong>IFSC Code:</strong> ${bank.ifscCode}</p>
+                            `;
+                        } else {
+                            document.getElementById('bankDetailsDisplay').innerHTML = '<p style="color: #e74c3c;">Admin has not added Bank details yet. Please use UPI.</p>';
+                        }
+                    }
+                })
+                .catch(err => console.error('Error loading payment details:', err));
+        }
+
+        // Setup payment method selection
+        document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.getElementById('upiSection').style.display = this.value === 'upi' ? 'block' : 'none';
+                document.getElementById('bankSection').style.display = this.value === 'bank' ? 'block' : 'none';
+            });
+        });
+
+        // Load cart and display order summary
+        function loadOrderSummary() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const orderItems = document.getElementById('orderItems');
+            
+            if (cart.length === 0) {
+                orderItems.innerHTML = '<p style="color: #e74c3c;">Your cart is empty!</p>';
+                return;
+            }
+
+            let subtotal = 0;
+            orderItems.innerHTML = cart.map(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                return `
+                    <div class="order-item">
+                        <div class="order-item-info">
+                            <div class="order-item-name">${item.name}</div>
+                            <div class="order-item-qty">Qty: ${item.quantity}</div>
+                        </div>
+                        <div class="order-item-price">₹${itemTotal.toLocaleString()}</div>
+                    </div>
+                `;
+            }).join('');
+
+            // Calculate totals
+            const gst = Math.round(subtotal * 0.18);
+            const total = subtotal + gst;
+
+            document.getElementById('summarySubtotal').textContent = '₹' + subtotal.toLocaleString();
+            document.getElementById('summaryTax').textContent = '₹' + gst.toLocaleString();
+            document.getElementById('summaryTotal').textContent = '₹' + total.toLocaleString();
+        }
+
+        function placeOrder() {
+            // Validate form
+            const name = document.getElementById('customerName').value;
+            const email = document.getElementById('customerEmail').value;
+            const phone = document.getElementById('customerPhone').value;
+            const address = document.getElementById('address').value;
+            const city = document.getElementById('city').value;
+            const state = document.getElementById('state').value;
+            const pincode = document.getElementById('pincode').value;
+            const agreeTerms = document.getElementById('agreeTerms').checked;
+            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+            if (!name || !email || !phone || !address || !city || !state || !pincode) {
+                alert('Please fill all required fields');
+                return;
+            }
+
+            if (!agreeTerms) {
+                alert('Please agree to Terms & Conditions');
+                return;
+            }
+
+            // Validate payment method details
+            if (paymentMethod === 'upi') {
+                const transactionId = document.getElementById('upiTransactionId').value;
+                const proofFile = document.getElementById('upiProofFile').files[0];
+                if (!transactionId || !proofFile) {
+                    alert('Please enter Transaction ID and upload payment proof for UPI');
+                    return;
+                }
+            }
+
+            if (paymentMethod === 'bank') {
+                const transactionId = document.getElementById('bankTransactionId').value;
+                const proofFile = document.getElementById('bankProofFile').files[0];
+                if (!transactionId || !proofFile) {
+                    alert('Please enter Transaction ID and upload payment proof for Bank Transfer');
+                    return;
+                }
+            }
+
+            // Create order object
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const gst = Math.round(subtotal * 0.18);
+            const total = subtotal + gst;
+
+            const order = {
+                orderId: 'ORDER-' + Date.now(),
+                customerName: name,
+                customerEmail: email,
+                customerPhone: phone,
+                shippingAddress: {
+                    address: address,
+                    area: document.getElementById('area').value,
+                    city: city,
+                    state: state,
+                    pincode: pincode
+                },
+                items: cart,
+                paymentMethod: paymentMethod,
+                total: total,
+                orderDate: new Date().toLocaleString(),
+                status: 'pending'
+            };
+
+            // Save order to localStorage
+            const orders = JSON.parse(localStorage.getItem('orders')) || [];
+            orders.push(order);
+            localStorage.setItem('orders', JSON.stringify(orders));
+
+            // Get payment proof file content
+            let proofFile, transactionId;
+            if (paymentMethod === 'upi') {
+                proofFile = document.getElementById('upiProofFile').files[0];
+                transactionId = document.getElementById('upiTransactionId').value;
+            } else if (paymentMethod === 'bank') {
+                proofFile = document.getElementById('bankProofFile').files[0];
+                transactionId = document.getElementById('bankTransactionId').value;
+            }
+
+            // Read file as base64
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const paymentProofBase64 = e.target.result;
+
+                // Store payment proof in localStorage
+                const paymentProofs = JSON.parse(localStorage.getItem('paymentProofs')) || [];
+                paymentProofs.push({
+                    orderId: order.orderId,
+                    transactionId: transactionId,
+                    proofFile: paymentProofBase64,
+                    fileName: proofFile.name,
+                    uploadedAt: new Date().toISOString(),
+                    status: 'pending'
+                });
+                localStorage.setItem('paymentProofs', JSON.stringify(paymentProofs));
+
+                // Clear cart
+                localStorage.removeItem('cart');
+
+                // Show success modal
+                const successModal = document.getElementById('successModal');
+                document.getElementById('orderNumber').textContent = order.orderId;
+                successModal.classList.add('show');
+
+                console.log('New Order:', order);
+                console.log('Payment Proof submitted');
+                alert('Order placed! Admin will verify your payment proof shortly.\nPlease check your email for updates.');
+            };
+            
+            if (proofFile) {
+                reader.readAsDataURL(proofFile);
+            }
+        }
+
+        function returnToHome() {
+            window.location.href = '../index.html';
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadOrderSummary();
+            loadPaymentDetails();
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('successModal');
+            if (event.target === modal) {
+                returnToHome();
+            }
+        });
+    </script>
+</body>
+</html>

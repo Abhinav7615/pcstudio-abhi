@@ -1,0 +1,295 @@
+                                                                                                                                                                                                                                                                                                                                                                                                                                                             <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Second Hand PC Studio - Quality Refurbished Laptops</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1><i class="fas fa-laptop"></i> Second Hand PC Studio</h1>
+            </div>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#products" class="nav-link">Products</a></li>
+                <li><a href="pages/about.html" class="nav-link">About</a></li>
+                <li><a href="pages/contact.html" class="nav-link">Contact</a></li>
+                <li><a href="#" onclick="openAuthModal()" class="nav-link auth-link"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                <li><a href="#" onclick="openCart()" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart <span id="cartCount" class="cart-badge">0</span></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Quality Refurbished Laptops</h2>
+            <p>Affordable, Reliable, and Fully Tested</p>
+            <button class="btn btn-primary" onclick="scrollToProducts()">Shop Now</button>
+        </div>
+    </section>
+
+    <!-- Trust Badges -->
+    <section class="trust-section">
+        <div class="container">
+            <div class="trust-badges">
+                <div class="badge">
+                    <i class="fas fa-check-circle"></i>
+                    <h4>Quality Tested</h4>
+                    <p>Every laptop tested & certified</p>
+                </div>
+                <div class="badge">
+                    <i class="fas fa-shield-alt"></i>
+                    <h4>Warranty</h4>
+                    <p>6-12 months warranty</p>
+                </div>
+                <div class="badge">
+                    <i class="fas fa-exchange-alt"></i>
+                    <h4>Easy Returns</h4>
+                    <p>15-day return policy</p>
+                </div>
+                <div class="badge">
+                    <i class="fas fa-headset"></i>
+                    <h4>24/7 Support</h4>
+                    <p>Dedicated customer support</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="products-section" id="products">
+        <div class="container">
+            <h2>Featured Laptops</h2>
+            <div class="filter-bar">
+                <input type="text" id="searchInput" placeholder="Search laptops..." class="search-input">
+                <select id="brandFilter" class="filter-select">
+                    <option value="">All Brands</option>
+                    <option value="Dell">Dell</option>
+                    <option value="HP">HP</option>
+                    <option value="Lenovo">Lenovo</option>
+                    <option value="ASUS">ASUS</option>
+                    <option value="Apple">Apple</option>
+                </select>
+                <select id="priceFilter" class="filter-select">
+                    <option value="">All Prices</option>
+                    <option value="0-20000">₹0 - ₹20,000</option>
+                    <option value="20000-40000">₹20,000 - ₹40,000</option>
+                    <option value="40000-60000">₹40,000 - ₹60,000</option>
+                    <option value="60000+">₹60,000+</option>
+                </select>
+            </div>
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be loaded here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Reviews -->
+    <section class="reviews-section">
+        <div class="container">
+            <h2>Customer Reviews</h2>
+            <div class="reviews-grid" id="reviewsGrid">
+                <!-- Reviews will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-cta">
+        <div class="container">
+            <h2>Need Help?</h2>
+            <p>Contact us via WhatsApp for quick assistance</p>
+            <a href="https://wa.me/916388391842?text=Hi, I'm interested in your laptops" target="_blank" class="btn btn-whatsapp">
+                <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>About Us</h4>
+                    <p>Second Hand PC Studio - Your trusted source for quality refurbished laptops.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="pages/return-policy.html">Return Policy</a></li>
+                        <li><a href="pages/warranty.html">Warranty</a></li>
+                        <li><a href="pages/privacy.html">Privacy Policy</a></li>
+                        <li><a href="pages/terms.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <p>Phone: +91 6388391842</p>
+                    <p>Email: info@secondhandpc.com</p>
+                    <p>Available: 10 AM - 8 PM (IST)</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Second Hand PC Studio. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal">
+        <div class="modal-content auth-modal-content">
+            <span class="close" onclick="closeAuthModal()">&times;</span>
+            <div class="auth-tabs">
+                <button class="auth-tab-btn active" onclick="switchAuthTab('login')">Login</button>
+                <button class="auth-tab-btn" onclick="switchAuthTab('register')">Register</button>
+                <button class="auth-tab-btn" onclick="window.location.href='pages/admin-login.html'">Admin Login</button>
+            </div>
+
+            <!-- Customer Login -->
+            <div id="loginTab" class="auth-tab-content active">
+                <h3>Customer Login</h3>
+                <form id="customerLoginForm" onsubmit="handleCustomerLogin(event)">
+                    <input type="email" id="loginEmail" placeholder="Email" required class="form-input">
+                    <input type="password" id="loginPassword" placeholder="Password" required class="form-input">
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                    <p style="text-align:center; margin-top:10px;">
+                        <a href="#" onclick="switchAuthTab('forgot-password'); return false;" style="color:#2563eb; text-decoration:none; font-size:14px;">Forgot Password?</a>
+                    </p>
+                    <p class="or-divider">OR</p>
+                    <button type="button" class="btn btn-secondary btn-block" onclick="switchAuthTab('otp')">Login with OTP</button>
+                </form>
+            </div>
+
+            <!-- Customer Registration -->
+            <div id="registerTab" class="auth-tab-content">
+                <h3>Create Account</h3>
+                <form id="customerRegisterForm" onsubmit="handleCustomerRegister(event)">
+                    <input type="text" id="registerName" placeholder="Full Name" required class="form-input">
+                    <input type="email" id="registerEmail" placeholder="Email" required class="form-input">
+                    <input type="tel" id="registerPhone" placeholder="Phone Number" required class="form-input">
+                    <input type="password" id="registerPassword" placeholder="Password (min 6 chars)" required class="form-input">
+                    <input type="password" placeholder="Confirm Password" required class="form-input">
+                    <label class="checkbox-label">
+                        <input type="checkbox" required>
+                        I agree to Terms & Conditions
+                    </label>
+                    <button type="submit" class="btn btn-primary btn-block">Register</button>
+                </form>
+            </div>
+
+            <!-- Admin Login -->
+            <div id="adminTab" class="auth-tab-content">
+                <h3>Admin Login</h3>
+                <form id="adminLoginForm" onsubmit="handleAdminLogin(event)">
+                    <input id="adminUsername" type="text" placeholder="Admin Username" required class="form-input">
+                    <input id="adminPassword" type="password" placeholder="Password" required class="form-input">
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                    <p class="or-divider">OR</p>
+                    <button type="button" class="btn btn-secondary btn-block" onclick="switchAuthTab('admin-otp')">Login with OTP</button>
+                </form>
+            </div>
+
+            <!-- Customer Forgot Password -->
+            <div id="forgot-passwordTab" class="auth-tab-content">
+                <h3>Reset Password</h3>
+                <div id="forgotPasswordStep1">
+                    <p style="color: #666; margin-bottom: 20px; font-size: 14px;">Enter your email to receive a password reset code</p>
+                    <input type="email" id="forgotEmail" placeholder="Enter your email" required class="form-input">
+                    <button type="button" class="btn btn-primary btn-block" onclick="requestCustomerPasswordReset()">Send Reset Code</button>
+                    <p style="text-align:center; margin-top:15px;">
+                        <a href="#" onclick="switchAuthTab('login'); return false;" style="color:#2563eb; text-decoration:none; font-size:14px;">Back to Login</a>
+                    </p>
+                </div>
+                <div id="forgotPasswordStep2" style="display:none;">
+                    <p style="color: #666; margin-bottom: 15px; font-size: 14px;">Enter the code sent to your email</p>
+                    <div id="passwordHintDisplay" style="background: #f0f9ff; padding: 12px; border-radius: 5px; margin-bottom: 15px; border-left: 4px solid #2563eb; display: none;">
+                        <p style="margin: 0; font-size: 13px; color: #1e40af;"><strong>Password Hint:</strong> <span id="passwordHintText"></span></p>
+                    </div>
+                    <input type="text" id="resetCode" placeholder="6-digit code" maxlength="6" required class="form-input">
+                    <input type="password" id="newPassword" placeholder="New Password (min 6 chars)" required class="form-input">
+                    <input type="password" id="confirmPassword" placeholder="Confirm Password" required class="form-input">
+                    <button type="button" class="btn btn-primary btn-block" onclick="resetCustomerPassword()">Reset Password</button>
+                    <p style="text-align:center; margin-top:15px;">
+                        <a href="#" onclick="switchAuthTab('login'); return false;" style="color:#2563eb; text-decoration:none; font-size:14px;">Back to Login</a>
+                    </p>
+                </div>
+                <div id="forgotPasswordStatus"></div>
+            </div>
+
+            <!-- OTP Login Tab -->
+            <div id="otpTab" class="auth-tab-content">
+                <h3>Customer Login with OTP</h3>
+                <form id="customerOtpForm" onsubmit="handleOtpLogin(event)">
+                    <input type="tel" id="otpPhone" placeholder="Phone Number" required class="form-input">
+                    <button type="button" class="btn btn-secondary btn-block" onclick="sendOtpCustomer()">Send OTP</button>
+                    <input type="text" id="otpCode" placeholder="Enter 4-digit OTP" maxlength="4" required class="form-input" style="display:none;">
+                    <button type="submit" class="btn btn-primary btn-block" style="display:none;" id="verifyOtpBtn">Verify OTP</button>
+                </form>
+            </div>
+
+            <!-- Admin OTP Login Tab -->
+            <div id="adminOtpTab" class="auth-tab-content">
+                <h3>Admin Login with OTP</h3>
+                <form id="adminOtpForm" onsubmit="handleAdminOtpLogin(event)">
+                    <input type="text" id="adminOtpUsername" placeholder="Admin Username" required class="form-input">
+                    <input type="tel" id="adminOtpPhone" placeholder="Registered Phone" required class="form-input">
+                    <button type="button" class="btn btn-secondary btn-block" onclick="sendOtpAdmin()">Send OTP</button>
+                    <input type="text" id="adminOtpCode" placeholder="Enter 4-digit OTP" maxlength="4" required class="form-input" style="display:none;">
+                    <button type="submit" class="btn btn-primary btn-block" style="display:none;" id="verifyAdminOtpBtn">Verify OTP</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content cart-modal-content">
+            <span class="close" onclick="closeCart()">&times;</span>
+            <h3>Shopping Cart</h3>
+            <div id="cartItems" class="cart-items">
+                <!-- Cart items will be displayed here -->
+            </div>
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">₹0</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping:</span>
+                    <span id="shipping">Free</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total:</span>
+                    <span id="total">₹0</span>
+                </div>
+            </div>
+            <button class="btn btn-primary btn-block" onclick="goToCheckout()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+</body>
+</html>
