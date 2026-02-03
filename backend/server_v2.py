@@ -17,7 +17,14 @@ load_dotenv()
 app = Flask(__name__)
 
 # ===== DATABASE CONFIGURATION =====
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///laptop_shop.db')
+# For Render: Use PostgreSQL if DATABASE_URL is set, otherwise use a file-based SQLite
+# Use a persistent SQLite file so the app works on Render without a DB service.
+db_url = os.getenv('DATABASE_URL')
+if db_url and db_url.strip():
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_url
+else:
+    # Development / fallback: Use file-based SQLite so data persists across workers
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///laptop_shop.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # ===== EMAIL CONFIGURATION =====
@@ -265,7 +272,10 @@ def send_order_confirmation(customer_email, order):
 def send_password_reset_email(email, reset_token):
     """Send password reset link via email"""
     try:
-        reset_link = f"http://localhost:5500/reset-password.html?token={reset_token}"
+        # Use FRONTEND_URL environment variable when available (deployed frontend),
+        # otherwise fall back to localhost for development.
+        frontend = os.getenv('FRONTEND_URL', 'http://localhost:5500')
+        reset_link = f"{frontend.rstrip('/')}\/reset-password.html?token={reset_token}"
         msg = Message(
             subject='Password Reset - Second Hand PC Studio',
             recipients=[email],

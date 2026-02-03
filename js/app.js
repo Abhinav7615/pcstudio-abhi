@@ -5,9 +5,12 @@ let API_URL;
 if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
     // Development environment
     API_URL = 'http://localhost:5000/api';
+} else if (window.location.hostname.includes('vercel.app')) {
+    // Frontend hosted on Vercel - use the Render backend URL (actual service name)
+    API_URL = 'https://pcstudio-abhi-1.onrender.com/api';
 } else {
-    // Production - Use Render backend
-    API_URL = 'https://pcstudio-abhi.onrender.com/api';
+    // Fallback: try the Render domain (common case for direct visits)
+    API_URL = 'https://pcstudio-abhi-1.onrender.com/api';
 }
 
 // Sample Products Data
