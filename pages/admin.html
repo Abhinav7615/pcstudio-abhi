@@ -756,10 +756,11 @@
         </div>
     </div>
 
+    <script src="../js/auth.js"></script>
     <script>
         // Check admin login (improved)
         window.addEventListener('load', function() {
-            const token = localStorage.getItem('adminToken') || sessionStorage.getItem('adminLoggedIn');
+            const token = typeof getToken === 'function' ? getToken() : (localStorage.getItem('adminToken') || null);
             if (!token) {
                 window.location.href = '../index.html';
                 return;
@@ -834,10 +835,36 @@
             `).join('') || '<tr><td colspan="6" style="text-align: center;">No orders yet</td></tr>';
         }
 
-        function loadOrders() {
-            const orders = JSON.parse(localStorage.getItem('orders')) || [];
+        async function loadOrders() {
             const tbody = document.getElementById('ordersBody');
-            
+            try {
+                const res = await apiFetch('/admin/orders', { method: 'GET' });
+                if (res && res.ok) {
+                    const data = await res.json();
+                    const orders = data.orders || data || [];
+                    if (orders.length) {
+                        tbody.innerHTML = orders.map(order => `
+                            <tr>
+                                <td><strong>${order.orderId}</strong></td>
+                                <td>${order.customerName}</td>
+                                <td>${order.customerPhone}</td>
+                                <td>${order.shippingAddress?.city || ''}, ${order.shippingAddress?.state || ''}</td>
+                                <td>${order.total}</td>
+                                <td><strong>${(order.paymentMethod||'').toUpperCase()}</strong></td>
+                                <td><span class="status-badge ${order.status}">${order.status}</span></td>
+                                <td>${order.orderDate ? new Date(order.orderDate).toLocaleDateString('en-IN') : ''}</td>
+                                <td>
+                                    <button class="action-btn view" onclick="viewOrderDetails('${order.orderId}')">View</button>
+                                    <button class="action-btn edit" onclick="updateOrderStatus('${order.orderId}')">Update</button>
+                                </td>
+                            </tr>
+                        `).join('');
+                        return;
+                    }
+                }
+            } catch (e) {}
+
+            const orders = JSON.parse(localStorage.getItem('orders')) || [];
             tbody.innerHTML = orders.map(order => `
                 <tr>
                     <td><strong>${order.orderId}</strong></td>
@@ -856,10 +883,34 @@
             `).join('') || '<tr><td colspan="9">No orders found</td></tr>';
         }
 
-        function loadProducts() {
-            const products = JSON.parse(localStorage.getItem('products')) || [];
+        async function loadProducts() {
             const tbody = document.getElementById('productsBody');
-            
+            try {
+                const res = await apiFetch('/products', { method: 'GET' });
+                if (res && res.ok) {
+                    const data = await res.json();
+                    const products = data.products || data || [];
+                    if (products.length) {
+                        tbody.innerHTML = products.map(product => `
+                            <tr>
+                                <td>${product.brand}</td>
+                                <td>${product.model}</td>
+                                <td>₹${Number(product.price).toLocaleString()} ${product.discount ? `<span style="color:var(--success-color); font-weight:600; margin-left:6px;">(${product.discount}% off)</span>` : ''}</td>
+                                <td>${product.condition}</td>
+                                <td>${product.outOfStock ? '<span style="color:var(--danger-color); font-weight:700;">Out of stock</span>' : (product.stock || 0)}</td>
+                                <td>
+                                    <button class="action-btn edit" onclick="editProduct(${product.id})">Edit</button>
+                                    <button class="action-btn delete" onclick="deleteProduct(${product.id})">Delete</button>
+                                    <button class="action-btn" onclick="toggleOutOfStock(${product.id})" style="background:#f1c40f;color:#fff;margin-left:6px;">Toggle Stock</button>
+                                </td>
+                            </tr>
+                        `).join('');
+                        return;
+                    }
+                }
+            } catch (e) {}
+
+            const products = JSON.parse(localStorage.getItem('products')) || [];
             tbody.innerHTML = products.map(product => `
                 <tr>
                     <td>${product.brand}</td>
@@ -876,10 +927,33 @@
             `).join('') || '<tr><td colspan="6">No products</td></tr>';
         }
 
-        function loadCustomers() {
+        async function loadCustomers() {
+            const tbody = document.getElementById('customersBody');
+            try {
+                const res = await apiFetch('/admin/customers', { method: 'GET' });
+                if (res && res.ok) {
+                    const data = await res.json();
+                    const customers = data.customers || data || [];
+                    if (customers.length) {
+                        tbody.innerHTML = customers.map(customer => `
+                            <tr>
+                                <td>${customer.name}</td>
+                                <td>${customer.email}</td>
+                                <td>${customer.phone}</td>
+                                <td>${customer.orders || 0}</td>
+                                <td>N/A</td>
+                                <td>
+                                    <button class="action-btn view" onclick="viewCustomerDetails('${customer.email}')">View</button>
+                                </td>
+                            </tr>
+                        `).join('');
+                        return;
+                    }
+                }
+            } catch (e) {}
+
             const orders = JSON.parse(localStorage.getItem('orders')) || [];
             const customers = {};
-            
             orders.forEach(order => {
                 if (!customers[order.customerEmail]) {
                     customers[order.customerEmail] = {
@@ -891,10 +965,7 @@
                 }
                 customers[order.customerEmail].orders++;
             });
-            
-            const tbody = document.getElementById('customersBody');
             const customerList = Object.values(customers);
-            
             tbody.innerHTML = customerList.map(customer => `
                 <tr>
                     <td>${customer.name}</td>

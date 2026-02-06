@@ -222,6 +222,20 @@ class PasswordResetToken(db.Model):
     customer = db.relationship('Customer')
 
 
+class AuthToken(db.Model):
+    __tablename__ = 'auth_tokens'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    token = db.Column(db.String(255), unique=True, nullable=False)
+    admin_id = db.Column(db.Integer, db.ForeignKey('admins.id'))
+    customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'))
+    expires_at = db.Column(db.DateTime, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    admin = db.relationship('Admin')
+    customer = db.relationship('Customer')
+
+
 # ===== HELPER FUNCTIONS =====
 
 def send_otp_email(email, otp):
@@ -275,7 +289,7 @@ def send_password_reset_email(email, reset_token):
         # Use FRONTEND_URL environment variable when available (deployed frontend),
         # otherwise fall back to localhost for development.
         frontend = os.getenv('FRONTEND_URL', 'http://localhost:5500')
-        reset_link = f"{frontend.rstrip('/')}\/reset-password.html?token={reset_token}"
+        reset_link = f"{frontend.rstrip('/')}/reset-password.html?token={reset_token}"
         msg = Message(
             subject='Password Reset - Second Hand PC Studio',
             recipients=[email],
@@ -312,6 +326,12 @@ def token_required(f):
         token = request.headers.get('Authorization', '').replace('Bearer ', '')
         if not token:
             return jsonify({'success': False, 'message': 'Token required'}), 401
+        
+        auth_token = AuthToken.query.filter_by(token=token).first()
+        if not auth_token or auth_token.expires_at < datetime.utcnow():
+            return jsonify({'success': False, 'message': 'Invalid or expired token'}), 401
+        
+        request.auth_token = auth_token
         return f(*args, **kwargs)
     return decorated
 
@@ -335,6 +355,14 @@ def admin_login():
         
         if admin and admin.check_password(password):
             token = secrets.token_urlsafe(32)
+            auth_token = AuthToken(
+                token=token,
+                admin_id=admin.id,
+                expires_at=datetime.utcnow() + timedelta(hours=24)
+            )
+            db.session.add(auth_token)
+            db.session.commit()
+            
             return jsonify({
                 'success': True,
                 'message': 'Login successful',
@@ -409,16 +437,27 @@ def customer_login():
         
         customer = Customer.query.filter_by(email=email).first()
         
-        if customer and customer.check_password(password):
-            token = secrets.token_urlsafe(32)
-            return jsonify({
-                'success': True,
-                'message': 'Login successful',
-                'token': token,
-                'customer': customer.to_dict()
-            }), 200
-        else:
+        if not customer or not customer.check_password(password):
             return jsonify({'success': False, 'message': 'Invalid credentials'}), 401
+        
+        if not customer.is_verified:
+            return jsonify({'success': False, 'message': 'Please verify your email first'}), 403
+        
+        token = secrets.token_urlsafe(32)
+        auth_token = AuthToken(
+            token=token,
+            customer_id=customer.id,
+            expires_at=datetime.utcnow() + timedelta(hours=24)
+        )
+        db.session.add(auth_token)
+        db.session.commit()
+        
+        return jsonify({
+            'success': True,
+            'message': 'Login successful',
+            'token': token,
+            'customer': customer.to_dict()
+        }), 200
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)}), 500
 
@@ -554,6 +593,9 @@ def get_product(product_id):
 def create_product():
     """Create new product (Admin only)"""
     try:
+        if not request.auth_token.admin_id:
+            return jsonify({'success': False, 'message': 'Admin access required'}), 403
+        
         data = request.get_json()
         
         product = Product(
@@ -589,11 +631,17 @@ def create_product():
 def create_order():
     """Create new order"""
     try:
+        if not request.auth_token.customer_id:
+            return jsonify({'success': False, 'message': 'Customer access required'}), 403
+        
         data = request.get_json()
         customer_id = data.get('customer_id')
         items = data.get('items', [])
         payment_method = data.get('payment_method')
         shipping_address = data.get('shipping_address')
+        
+        if request.auth_token.customer_id != customer_id:
+            return jsonify({'success': False, 'message': 'Unauthorized: customer mismatch'}), 403
         
         if not items:
             return jsonify({'success': False, 'message': 'Cart is empty'}), 400
@@ -667,10 +715,40 @@ def get_order(order_id):
         order = Order.query.get(order_id)
         if not order:
             return jsonify({'success': False, 'message': 'Order not found'}), 404
+        
+        if request.auth_token.customer_id and request.auth_token.customer_id != order.customer_id:
+            return jsonify({'success': False, 'message': 'Unauthorized: cannot access other customer orders'}), 403
+        
         return jsonify({
             'success': True,
             'order': order.to_dict()
         }), 200
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+
+# ===== ADMIN - LIST ORDERS/CUSTOMERS =====
+@app.route('/api/admin/orders', methods=['GET'])
+@token_required
+def admin_list_orders():
+    try:
+        # only admins can list orders
+        if not getattr(request, 'auth_token', None) or not request.auth_token.admin_id:
+            return jsonify({'success': False, 'message': 'Admin access required'}), 403
+        orders = Order.query.order_by(Order.created_at.desc()).all()
+        return jsonify({'success': True, 'orders': [o.to_dict() for o in orders]}), 200
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+
+@app.route('/api/admin/customers', methods=['GET'])
+@token_required
+def admin_list_customers():
+    try:
+        if not getattr(request, 'auth_token', None) or not request.auth_token.admin_id:
+            return jsonify({'success': False, 'message': 'Admin access required'}), 403
+        customers = Customer.query.order_by(Customer.created_at.desc()).all()
+        return jsonify({'success': True, 'customers': [c.to_dict() for c in customers]}), 200
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)}), 500
 

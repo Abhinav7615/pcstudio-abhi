@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="auth.js"></script>
 </head>
 <body>
     <div class="container" style="max-width:420px; margin:4rem auto;">
@@ -68,7 +69,13 @@
     </div>
 
     <script>
-        const API_URL = 'https://pcstudio-abhi-1.onrender.com/api';
+        // API Configuration - Auto-detect environment
+        let API_URL;
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            API_URL = 'http://127.0.0.1:5000/api';
+        } else {
+            API_URL = 'https://pcstudio-abhi-1.onrender.com/api';
+        }
 
         // Login Form
         document.getElementById('adminLoginPageForm').addEventListener('submit', async function(e) {
@@ -88,7 +95,7 @@
                 });
                 const data = await res.json();
                 if (data.success) {
-                    localStorage.setItem('adminToken', data.token);
+                    try { setToken(data.token); } catch (e) { localStorage.setItem('adminToken', data.token); }
                     localStorage.setItem('admin', JSON.stringify(data.admin));
                     sessionStorage.setItem('adminLoggedIn', 'true');
                     sessionStorage.setItem('adminUsername', data.admin.username || username);
